@@ -87,9 +87,6 @@ export function useSearchActions(params: UseSearchActionsParams) {
     setVisiblePage(pageParam);
     dispatch(setPage(pageParam));
 
-    if (q) {
-      await handleSearch(q, langList, stars, sortParam, pageParam);
-    }
   }, [searchParams]);
 
   const handleSearch = useCallback(

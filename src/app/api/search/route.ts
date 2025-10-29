@@ -3,8 +3,7 @@ import { searchRepos } from "../../../lib/githubApi";
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
-
-  const query = searchParams.get("q") || "";
+  const rawQuery = searchParams.get("q") || "";
   const languagesParam = searchParams.get("languages") || "";
   const languages = languagesParam
     ? languagesParam
@@ -21,9 +20,7 @@ export async function GET(req: NextRequest) {
       : undefined
     : undefined;
 
-  if (!query) {
-    return NextResponse.json({ error: "Query is required" }, { status: 400 });
-  }
+  const query = rawQuery || (minStars ? "" : "stars:>30000");
 
   try {
     const results = await searchRepos({
